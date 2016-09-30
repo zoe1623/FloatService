@@ -75,7 +75,7 @@ public class FloatService implements View.OnTouchListener, View.OnClickListener 
                     showHalf();
                 break;
                 case ALPHA_MSG:
-                    mViewFloat.setAlpha(0.5f);
+                    mViewImage.setAlpha(0.5f);
                     mHandler.sendEmptyMessageDelayed(HIDE_MSG, DELAY_TIME);
                 break;
                 case CLOSE_MSG:
@@ -439,7 +439,7 @@ public class FloatService implements View.OnTouchListener, View.OnClickListener 
             tmpY = event.getRawY();
             return false;
         }
-        mViewFloat.setAlpha(1.0f);
+        mViewImage.setAlpha(1.0f);
         if(isHalf){//当浮标是收缩状态时, 展开
             refreshView();
             spread();
@@ -479,6 +479,7 @@ public class FloatService implements View.OnTouchListener, View.OnClickListener 
                }
                break;
            case MotionEvent.ACTION_UP:
+               Log.e("=========","ACTION_UP");
                int xOff = (int) event.getRawX();
                int yOff = (int) event.getRawY();
                if(clickable && Math.abs(yOff - this.y) < imageHeight){
@@ -492,6 +493,12 @@ public class FloatService implements View.OnTouchListener, View.OnClickListener 
                        if(Math.abs(screenWidth - xOff - this.x ) < imageWidth ) {
                            onClick(v);
                        }
+                   }
+                   Log.e("==========", "点击");
+                   if(isShowing){
+                       mHandler.sendEmptyMessageDelayed(CLOSE_MSG, DELAY_TIME);
+                   }else {
+                       mHandler.sendEmptyMessageDelayed(ALPHA_MSG, DELAY_TIME);
                    }
                    return true;
                }
@@ -612,14 +619,17 @@ public class FloatService implements View.OnTouchListener, View.OnClickListener 
     /** 点击了客服*/
     private void clickService(){
         Toast.makeText(mContext, "点击了客服", Toast.LENGTH_SHORT).show();
+        close();
     }
     /** 点击了安全*/
     private void clickSafe(){
         Toast.makeText(mContext, "点击了安全", Toast.LENGTH_SHORT).show();
+        close();
     }
     /** 点击了关闭*/
     private AlertDialog mAlertDialog;
     private void clickClose(){
+        close();
         Toast.makeText(mContext, "点击了关闭", Toast.LENGTH_SHORT).show();
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity)
                 .setTitle("温馨提示")
