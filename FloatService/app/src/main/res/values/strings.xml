@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FloatService</string>
+    <string name="service">客服</string>
+    <string name="safe">安全</string>
+</resources>
