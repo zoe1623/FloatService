@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.zoe.floatservice.float_view.SDKManager;
+
 public class MainActivity extends Activity implements View.OnClickListener {
     private FloatService mFloat;
     @Override
@@ -14,6 +16,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.bt_show).setOnClickListener(this);
         mFloat = FloatService.getInstance(this);
         mFloat.onCreate();
+        SDKManager.tryShowFloat(this);
     }
 
     @Override
